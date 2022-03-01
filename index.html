@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script>
+  function dropdownFunc() {
+    if (document.getElementById("Mobile").className.indexOf("w3-show") == -1) {
+      document.getElementById("Mobile").className += " w3-show";
+    } else {
+      document.getElementById("Mobile").className = document.getElementById("Mobile").className.replace(" w-3 show", "");
+    }
+  }
+</script>
 <body>
 
 <!-- Navbar (sit on top) -->
@@ -15,12 +24,12 @@
       <a href="#projects" class="w3-bar-item w3-button">Projects</a>
       <a href="#about" class="w3-bar-item w3-button">About</a>
       <a href="#contact" class="w3-bar-item w3-button">Contact</a>
-<<<<<<< HEAD
       <a href="quote-generator.html" class="w3-bar-itm w3-button">Quote Generator</a>
       <a href="javascript-calculator.html" class="w3-bar-itm w3-button">Calculator</a>
     </div>
     <!-- Float links to the right. Hide them on large screens -->
-    <div class="w3-right w3-hide-medium w3-hide-large">
+    <div class="w3-right w3-hide-medium w3-hide-large w3-dropdown-click">
+      <button onclick="dropdownFunc()" class="w3-button w3-black">Projects</button>
       <div id="Mobile" class="w3-bar-item w3-button w3-dropdown-content">
         <a href="#projects" class="w3-bar-item w3-button">Projects</a>
         <a href="#about" class="w3-bar-item w3-button">About</a>
@@ -28,9 +37,6 @@
         <a href="quote-generator.html" class="w3-bar-itm w3-button">Quote Generator</a>
         <a href="javascript-calculator.html" class="w3-bar-itm w3-button">Calculator</a>
       </div>
-=======
-      <a href="https://oldephraim.github.io/quote-generator.html" class="w3-bar-itm w3-button">Quote Generator</a>
->>>>>>> d0f51ab13905f3ee4b340ce49eb8573de1270909
     </div>
   </div>
 </div>
