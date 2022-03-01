@@ -8,8 +8,10 @@
   function dropdownFunc() {
     if (document.getElementById("Mobile").className.indexOf("w3-show") == -1) {
       document.getElementById("Mobile").className += " w3-show";
+      document.getElementById("Mobile").className -= " w3-hide";
     } else {
       document.getElementById("Mobile").className -= " w3-show";
+      document.getElementById("Mobile").className += " w3-hide";
     }
   }
 </script>
