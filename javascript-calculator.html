@@ -1,0 +1,126 @@
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>JavaScript Calculator</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script>
+function clearDisplay() {
+  document.getElementById("display").innerText = "0";
+};
+function pushToDisplay(input) {
+  if (document.getElementById("display").innerText == "0") {
+    document.getElementById("display").innerText = input;
+  } else {
+  document.getElementById("display").innerText += input;
+}};
+function returnAnswer() {
+  let splitArr = document.getElementById("display").innerText.split("");
+  if (isNaN(splitArr[splitArr.length - 1]) && splitArr[splitArr.length - 1] !== ".") {
+    document.getElementById("display").innerText = "syntax error";
+  }
+  let reuniteArr = [];
+  for (let i = splitArr.length - 2; i >= -1; i--) {
+    if (isNaN(splitArr[i]) && splitArr[i] !== ".") {
+      reuniteArr.unshift(splitArr[i + 1]);
+      reuniteArr.unshift(splitArr[i]);
+      splitArr.splice(i, 2);
+    } else if (splitArr[i + 1] !== undefined) {
+      splitArr[i + 1] = (splitArr[i] + splitArr[i + 1]);
+      splitArr.splice(i, 1);
+    } else if (i === -1) {
+      reuniteArr.unshift(splitArr[0]);
+    };
+  };
+  let definedArr = [];
+  for (let j = 0; j < reuniteArr.length; j++) {
+    if (reuniteArr[j] !== undefined) {
+      definedArr.push(reuniteArr[j]);
+    }
+  }
+  if (definedArr[0] === "+" || definedArr[0] === "*" || definedArr[0] === "/") {
+    document.getElementById("display").innerText = "syntax error";
+  }
+  let firstValueNegative = (definedArr[1] * -1).toString();
+  if (definedArr[0] === "-") {
+    definedArr.unshift(firstValueNegative);
+    definedArr.splice(1, 2);
+  }
+  for (let k = 0; k < definedArr.length; k++) {
+    if (definedArr[k] === "+" && isNaN(definedArr[k - 1])) {
+      document.getElementById("display").innerText = "syntax error";
+    } else if (definedArr[k] === "*" && isNaN(definedArr[k - 1])) {
+      document.getElementById("display").innerText = "syntax error";
+    } else if (definedArr[k] === "/" && isNaN(definedArr[k - 1])) {
+      document.getElementById("display").innerText = "syntax error";
+    } else if (definedArr[k] === "-" && isNaN(definedArr[k - 1]) && !isNaN(definedArr[k + 1])) {
+      definedArr.splice(k, 0, (definedArr[k + 1] * -1).toString());
+      definedArr.splice(k + 1, 2);
+    }
+  }
+  for (let l = 0; l < definedArr.length; l++) {
+    if (definedArr[l] === "*") {
+      definedArr.splice(l - 1, 0, (definedArr[l - 1] * definedArr[l + 1]).toString());
+      definedArr.splice(l, 3);
+      l--;
+      console.log(definedArr);
+    } else if (definedArr[l] === "/") {
+      definedArr.splice(l - 1, 0, (definedArr[l - 1] / definedArr[l + 1]).toString());
+      definedArr.splice(l, 3);
+    }
+  }
+  for (let m = 0; m < definedArr.length; m++) {
+    if (definedArr[m] === "+") {
+      definedArr.splice(m - 1, 0, (parseFloat(definedArr[m - 1]) + parseFloat(definedArr[m + 1])).toString());
+      definedArr.splice(m, 3);
+    } else if (definedArr[m] === "-") {
+      definedArr.splice(m - 1, 0, (definedArr[m - 1] - definedArr[m + 1]).toString());
+      definedArr.splice(m, 3);
+    }
+  }
+  if (document.getElementById("display").innerText == "syntax error") {
+    return error;
+  } else {
+  document.getElementById("display").innerText = definedArr[0];
+  return definedArr[0];
+}};
+
+</script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row text-center">
+    <h1 {text-align: center;}>JavaScript Calculator by Alan Garber</h1></div>
+    <div class="row text-center">
+      <div class="col">
+    <p id="display" class="bg-success text-white my-2 py-4">0</p></div></div>
+    <div class="row">
+      <div class="col-4 my-2">
+<button id="zero" class="btn btn-primary btn-block num" onclick=pushToDisplay("0")>0</button>
+<button id="one" class="btn btn-primary btn-block num" onclick=pushToDisplay("1")>1</button>
+<button id="two" class="btn btn-primary btn-block num" onclick=pushToDisplay("2")>2</button>
+<button id="three" class="btn btn-primary btn-block num" onclick=pushToDisplay("3")>3</button>
+</div>
+  <div class="col-4 my-2">
+<button id="four" class="btn btn-primary btn-block num" onclick=pushToDisplay("4")>4</button>
+<button id="five" class="btn btn-primary btn-block num" onclick=pushToDisplay("5")>5</button>
+<button id="six" class="btn btn-primary btn-block num" onclick=pushToDisplay("6")>6</button>
+<button id="equals" class="btn btn-warning btn-block" onclick=returnAnswer()>=</button>
+</div>
+  <div class="col-4 my-2">
+<button id="seven" class="btn btn-primary btn-block num" onclick=pushToDisplay("7")>7</button>
+<button id="eight" class="btn btn-primary btn-block num" onclick=pushToDisplay("8")>8</button>
+<button id="nine" class="btn btn-primary btn-block num" onclick=pushToDisplay("9")>9</button>
+<button id="clear" class="btn btn-warning btn-block" onclick=clearDisplay()>CLEAR</button>
+</div></div>
+<button id="add" class="btn btn-secondary btn-block operator" onclick=pushToDisplay("+")>+</button>
+<button id="subtract" class="btn btn-secondary btn-block operator" onclick=pushToDisplay("-")>-</button>
+<button id="multiply" class="btn btn-secondary btn-block operator" onclick=pushToDisplay("*")>x</button>
+<button id="divide" class="btn btn-secondary btn-block operator" onclick=pushToDisplay("/")>/</button>
+<button id="decimal" class="btn btn-secondary btn-block decimal" onclick=pushToDisplay(".")>.</button>
+</div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
